@@ -1,2 +1,2 @@
-# spring-training-base
-spring-training-base
+# spring-transaction-traning
+Spring Transaction Traning

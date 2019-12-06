@@ -1,0 +1,16 @@
+spring:
+  output:
+    ansi:
+      enabled: DETECT
+
+tom:
+  maxConnections: 2000
+  maxThreads: 2000
+  soTimeout: 30000
+
+#logging:
+#  level:
+#    root: INFO
+#    org.lili.forfun.spring.traning: DEBUG
+#    org.springframework.web: INFO
+

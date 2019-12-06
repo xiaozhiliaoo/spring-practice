@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lili.forfun.spring.traning.db.mapper.PersonMapper">
+    <resultMap id="BaseResultMap" type="org.lili.forfun.spring.traning.db.domain.Person">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+    </resultMap>
+    <sql id="AllColumn">
+        id,
+        gmt_create,
+        gmt_modified,
+        name,
+        age,
+        sex,
+        status,
+        level
+    </sql>
+    <!-- insert into -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.lili.forfun.spring.traning.db.domain.Person">
+        insert into
+        person(gmt_create,gmt_modified,
+        name,
+        age,
+        sex,
+        status,
+        level)
+        values(#{gmtCreate},#{gmtModified},#{name},#{age},#{sex},#{status},#{level})
+    </insert>
+    <!-- update -->
+    <update id="update" parameterType="org.lili.forfun.spring.traning.db.domain.Person">
+        update
+        person
+        set
+        gmt_create=#{gmtCreate},
+        gmt_modified=#{gmtModified},
+        name=#{name},
+        age=#{age},
+        sex=#{sex},
+        status=#{status},
+        level=#{level}
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)
+        from person
+    </select>
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="AllColumn"/>
+        from person
+        where id=#{id, jdbcType=BIGINT}
+    </select>
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from person
+        where id = #{id, jdbcType=BIGINT}
+    </delete>
+    <select id="selectPersonByName" resultMap="BaseResultMap">
+        select
+        <include refid="AllColumn"/>
+        from person where name=#{name, jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        select
+        <include refid="AllColumn"/>
+        from person
+        order by id desc
+        limit #{offset, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </select>
+</mapper>

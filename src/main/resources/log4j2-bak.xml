@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="baseDir">logs</Property>
+        <Property name="logName">spring-traning-base</Property>
+        <Property name="springLogName">spring-traning-base-spring</Property>
+        <Property name="backupLog">${baseDir}/${logName}.log.%d{yyyy-MM-dd}</Property>
+        <Property name="backupSpringLog">${baseDir}/${springLogName}.log.%d{yyyy-MM-dd}</Property>
+
+        <!-- 日志文件推荐至少保存15天 -->
+        <Property name="retentionDay">15d</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="%clr{%date{MM-dd HH:mm:ss.SSS}}{faint}%clr{%5level}%clr{[%thread]}{magenta}%clr{%class{10} - }{cyan}%message%n"/>
+        </Console>
+
+        <RollingFile name="STANDARD_FILE" fileName="${baseDir}/${logName}.log" filePattern="${backupLog}">
+            <PatternLayout>
+                <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %5level [%thread] %class{10} - %message%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="2 GB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="15">
+                <Delete basePath="${baseDir}">
+                    <IfFileName glob="${logName}.log.*"/>
+                    <IfLastModified age="${retentionDay}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <RollingFile name="SPRING_FILE" fileName="${baseDir}/${springLogName}.log" filePattern="${backupSpringLog}">
+            <PatternLayout>
+                <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %5level [%thread] %class{10} - %message%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="2 GB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="15">
+                <Delete basePath="${baseDir}">
+                    <IfFileName glob="${logName}.log.*"/>
+                    <IfLastModified age="${retentionDay}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="ERROR" additivity="false">
+            <AppenderRef level="ERROR" ref="Console"/>
+        </Root>
+        <Logger name="org.lili.forfun.transaction.traning" level="INFO" additivity="false">
+            <AppenderRef level="INFO" ref="Console"/>
+            <AppenderRef level="INFO" ref="STANDARD_FILE"/>
+        </Logger>
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef level="INFO"/>
+        </Logger>
+    </Loggers>
+</Configuration>
