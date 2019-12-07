@@ -1,12 +1,12 @@
 package org.lili.forfun.spring.traning.service;
 
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
-import org.lili.forfun.spring.traning.db.domain.Course;
+
+import org.apache.commons.lang3.RandomUtils;
 import org.lili.forfun.spring.traning.db.domain.Person;
 import org.lili.forfun.spring.traning.db.mapper.BaseMapper;
 import org.lili.forfun.spring.traning.db.mapper.PersonMapper;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,45 +19,83 @@ import java.util.List;
 public class PersonService extends AbstractService<Person> {
 
     @Autowired
-    private PersonMapper mapper;
+    private PersonMapper personMapper;
 
     @Autowired
     private CourseService courseService;
 
     @Override
     public BaseMapper<Person> getMapper() {
-        return mapper;
+        return personMapper;
     }
 
     /**
      * 该事务要做的事情是，查找学生，并且修改学生名字和学生所对应的课程
-     *
+     *  AbstractPlatformTransactionManager
      * @param name
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public List<Person> selectPersonByName(String name) {
-        List<Person> people = mapper.selectPersonByName(name);
+        List<Person> people = personMapper.selectPersonByName(name);
         Person person = people.get(0);
-        person.setName("hi~~~~");
-        updatePerson(person);
+        ((PersonService) AopContext.currentProxy()).updatePerson(person);
         return people;
     }
 
-    public int updatePerson(Person person) {
-        person.setAge("99999999");
-        person.setGmtModified(new Date());
-        return mapper.update(person);
+    public List<Person> selectPersonByName2(String name) {
+        List<Person> people = personMapper.selectPersonByName(name);
+        Person person = people.get(0);
+        courseService.updatePerson(person);
+        return people;
     }
 
-    public void updateCource(Person person) {
-        long id = person.getId();
-        List<Course> courses = courseService.selectCourseByPersonId(id);
-        Course course = courses.get(0);
-        Course newCourse = new Course();
-        newCourse.setName(course.getName());
-        newCourse.setOpen(course.getOpen());
-        newCourse.setTeacher(course.getTeacher());
-        courseService.insert(newCourse);
+    @Transactional
+    public List<Person> selectPersonByName3(String name) {
+        List<Person> people = personMapper.selectPersonByName(name);
+        Person person = people.get(0);
+        updatePerson3(person);
+        return people;
+    }
+
+    public void updatePerson3(Person person){
+        person.setAge(String.valueOf(RandomUtils.nextInt()));
+        person.setGmtModified(new Date());
+        update(person);
+        courseService.updateCource(person);
+        throw new RuntimeException("error");
+    }
+
+    /**
+     * 同一个类中的方法
+     * @param person
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePerson(Person person){
+        person.setAge(String.valueOf(RandomUtils.nextInt()));
+        person.setGmtModified(new Date());
+        update(person);
+        courseService.updateCource(person);
+        throw new RuntimeException("error");
+    }
+
+    /**
+     * updatePerson4事务不生效，数据库插入新数据
+     * @param name
+     * @return
+     */
+    public List<Person> selectPersonByName4(String name) {
+        List<Person> people = personMapper.selectPersonByName(name);
+        Person person = people.get(0);
+        updatePerson4(person);
+        return people;
+    }
+
+    @Transactional
+    public void updatePerson4(Person person){
+        person.setAge(String.valueOf(RandomUtils.nextInt()));
+        person.setGmtModified(new Date());
+        update(person);
+        courseService.updateCource(person);
+        throw new RuntimeException("error");
     }
 }

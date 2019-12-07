@@ -45,4 +45,3 @@ INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES (
 INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('数学', '1', '0', '张老师');
 INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('英语', '1', '1', '李老师');
 INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('语文', '2', '1', '王老师');
-

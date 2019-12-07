@@ -22,12 +22,45 @@ public class PersonApi extends BaseApi {
     private PersonService personService;
 
     @GetMapping("/name")
-    public RequestResult<List<Person>> listPerson(@RequestParam(name = "name") String name) {
+    public RequestResult<List<Person>> getPersonByName(@RequestParam(name = "name") String name) {
         log.info("GET person name:{}", name);
         try {
             return process(personService.selectPersonByName(name));
         } catch (Exception e) {
-            log.error("", e);
+            log.error("getPersonByName error:", e);
+            return error(e.getMessage());
+        }
+    }
+
+    @GetMapping("/name2")
+    public RequestResult<List<Person>> getPersonByName2(@RequestParam(name = "name") String name) {
+        log.info("GET person name:{}", name);
+        try {
+            return process(personService.selectPersonByName2(name));
+        } catch (Exception e) {
+            log.error("getPersonByName error:", e);
+            return error(e.getMessage());
+        }
+    }
+
+    @GetMapping("/name3")
+    public RequestResult<List<Person>> getPersonByName3(@RequestParam(name = "name") String name) {
+        log.info("GET person name:{}", name);
+        try {
+            return process(personService.selectPersonByName3(name));
+        } catch (Exception e) {
+            log.error("getPersonByName error:", e);
+            return error(e.getMessage());
+        }
+    }
+
+    @GetMapping("/name4")
+    public RequestResult<List<Person>> getPersonByName4(@RequestParam(name = "name") String name) {
+        log.info("GET person name:{}", name);
+        try {
+            return process(personService.selectPersonByName4(name));
+        } catch (Exception e) {
+            log.error("getPersonByName error:", e);
             return error(e.getMessage());
         }
     }

@@ -53,10 +53,10 @@
         where id = #{id, jdbcType=BIGINT}
     </delete>
 
-    <select id="selectCourseByPersonId" resultMap="BaseResultMap">
+    <!--<select id="selectCourseByPersonId" resultMap="BaseResultMap">
         select
         <include refid="AllColumn"/>
         from course
         where person_id=#{personId, jdbcType=BIGINT}
-    </select>
+    </select>-->
 </mapper>

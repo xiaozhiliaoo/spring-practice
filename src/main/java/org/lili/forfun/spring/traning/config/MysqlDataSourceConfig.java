@@ -2,7 +2,6 @@ package org.lili.forfun.spring.traning.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -31,6 +30,7 @@ public class MysqlDataSourceConfig {
 
     @Bean(name = "mysqlDataSource")
     public DataSource mysqlDataSource() {
+        //return new EmbeddedDatabaseBuilder().addScript("schema.sql").build();
         DruidDataSource dataSource = new DruidDataSource();
         //dataSource.setDriverClassName("com.mysql.jdbc.Driver"); // mysql5.6
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver"); //mysql 8
@@ -55,6 +55,9 @@ public class MysqlDataSourceConfig {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(mysqlDataSource);
         sessionFactory.setTypeAliasesPackage(PACKAGE);
+//        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//        sessionFactory.setMapperLocations(resolver.getResources(
+//                "classpath*:/mapper/*.xml"));
         return sessionFactory.getObject();
     }
 }
