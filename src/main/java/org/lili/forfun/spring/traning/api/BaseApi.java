@@ -1,10 +1,12 @@
 package org.lili.forfun.spring.traning.api;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.lili.forfun.spring.traning.enums.ExceptionCode;
+import org.lili.forfun.spring.traning.exception.BusinessException;
 
-@Slf4j
+@Log4j2
 abstract class BaseApi {
 
     protected static final String APPLICATION_JSON = "application/json; charset=utf-8";
@@ -27,14 +29,19 @@ abstract class BaseApi {
      * @return
      */
     <T> RequestResult<T> error(String msg) {
-        log.warn("RequestResult error msg: {}", msg);
+        log.error("RequestResult error msg: {}", msg);
         RequestResult<T> rr = new RequestResult<>(ExceptionCode.INTERNAL_ERROR.getCode(), msg);
         log.info("result json: {}", JSON.toJSONString(rr));
         return rr;
     }
 
     public <T> RequestResult<T> error(Exception e) {
-        log.warn("RequestResult error msg: {}", e.getMessage());
+        log.error("RequestResult error msg: {}", e.getMessage());
+        return new RequestResult<>(ExceptionCode.INTERNAL_ERROR.getCode(), e.getMessage());
+    }
+
+    public <T> RequestResult<T> error(BusinessException e) {
+        log.error("RequestResult error msg: {}", e.getMessage());
         return new RequestResult<>(ExceptionCode.INTERNAL_ERROR.getCode(), e.getMessage());
     }
 

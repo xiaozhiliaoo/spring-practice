@@ -28,4 +28,21 @@ INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES 
 INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili3', '11', 'm', '1', '1');
 INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili4', '11', 'm', '1', '1');
 
-  
+
+CREATE TABLE `traning`.`course` (
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `name` VARCHAR(45) NULL COMMENT '课程名字',
+  `person_id` BIGINT(11) NULL,
+  `open` INT NOT NULL DEFAULT 0 COMMENT '是否开课(0：开课 1：没开课)',
+  `teacher` VARCHAR(45) NULL COMMENT '老师名字',
+   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('语文', '1', '1', '王老师');
+INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('数学', '1', '0', '张老师');
+INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('英语', '1', '1', '李老师');
+INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('语文', '2', '1', '王老师');
+

@@ -1,6 +1,7 @@
 package org.lili.forfun.spring.traning.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -18,7 +19,7 @@ import java.sql.Connection;
 @MapperScan(
         basePackages = {"org.lili.forfun.spring.traning.db.mapper"},
         sqlSessionFactoryRef = "mySqlSessionFactory")
-@Slf4j
+@Log4j2
 public class MysqlDataSourceConfig {
     static final String PACKAGE = "org.lili.forfun.spring.traning";
     @Value("${db.mysql.url}")

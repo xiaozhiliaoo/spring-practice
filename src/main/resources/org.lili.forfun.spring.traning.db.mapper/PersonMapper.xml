@@ -62,11 +62,14 @@
         from person
         where id = #{id, jdbcType=BIGINT}
     </delete>
-    <select id="selectPersonByName" resultMap="BaseResultMap">
+    <select id="selectPersonByName" resultMap="BaseResultMap" parameterType="string" >
         select
         <include refid="AllColumn"/>
         from person where name=#{name, jdbcType=VARCHAR}
     </select>
+    <update id="updatePersonNameById">
+        update person set name=#{name, jdbcType=VARCHAR} where id=#{id, jdbcType=BIGINT}
+    </update>
     <select id="selectByPage" resultMap="BaseResultMap">
         select
         <include refid="AllColumn"/>

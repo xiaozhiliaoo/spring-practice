@@ -3,9 +3,8 @@ package org.lili.forfun.spring.traning.api;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 
 @Component
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class HealthApi extends BaseApi {
 
-    @GetMapping("/ok")
-    public String ok(String v) {
-        log.debug("{}", v);
-        return v;
+    @GetMapping("/ok/{value}")
+    public String ok(@PathVariable("value") String value) {
+        log.debug("{}", value);
+        return value;
     }
 
     @GetMapping("/health")

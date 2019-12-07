@@ -7,9 +7,11 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
+@EnableTransactionManagement
 @ComponentScan(basePackages = {"org.lili.forfun"})
 @PropertySources({@PropertySource("classpath:spring-traning-base.properties"),
         @PropertySource("classpath:spring-traning-base-common.properties")})

@@ -8,9 +8,10 @@ tom:
   maxThreads: 2000
   soTimeout: 30000
 
+
 #logging:
 #  level:
-#    root: INFO
-#    org.lili.forfun.spring.traning: DEBUG
-#    org.springframework.web: INFO
+#    root: ERROR
+#    org.lili.forfun.spring.traning: ERROR
+#    org.springframework.web: ERROR
 

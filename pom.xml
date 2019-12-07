@@ -209,7 +209,7 @@
     </dependencies>
 
     <build>
-        <finalName>spring-transaction-traning</finalName>
+        <finalName>spring-traning-base</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

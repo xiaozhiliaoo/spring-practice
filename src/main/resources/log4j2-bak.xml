@@ -4,6 +4,8 @@
         <Property name="baseDir">logs</Property>
         <Property name="logName">spring-traning-base</Property>
         <Property name="springLogName">spring-traning-base-spring</Property>
+
+        <!-- 过往日志格式为: {logName}.log.{保存日期} -->
         <Property name="backupLog">${baseDir}/${logName}.log.%d{yyyy-MM-dd}</Property>
         <Property name="backupSpringLog">${baseDir}/${springLogName}.log.%d{yyyy-MM-dd}</Property>
 
@@ -55,12 +57,13 @@
         <Root level="ERROR" additivity="false">
             <AppenderRef level="ERROR" ref="Console"/>
         </Root>
-        <Logger name="org.lili.forfun.transaction.traning" level="INFO" additivity="false">
-            <AppenderRef level="INFO" ref="Console"/>
-            <AppenderRef level="INFO" ref="STANDARD_FILE"/>
+        <Logger name="org.lili.forfun" level="DEBUG" additivity="false">
+            <AppenderRef level="DEBUG" ref="Console"/>
+            <AppenderRef level="DEBUG" ref="STANDARD_FILE"/>
         </Logger>
-        <Logger name="org.springframework" level="INFO" additivity="false">
-            <AppenderRef level="INFO"/>
+        <Logger name="org.springframework" level="ERROR" additivity="false">
+            <AppenderRef level="ERROR" ref="Console"/>
+            <AppenderRef level="ERROR" ref="SPRING_FILE"/>
         </Logger>
     </Loggers>
 </Configuration>

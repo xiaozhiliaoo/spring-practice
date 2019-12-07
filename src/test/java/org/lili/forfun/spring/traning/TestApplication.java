@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySources;
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @ComponentScan(
-    basePackages = "org.lili.forfun.transaction.traning")
+    basePackages = "org.lili.forfun.spring.traning")
 @PropertySources({@PropertySource("classpath:spring-traning-base.properties"),
         @PropertySource("classpath:spring-traning-base-common.properties")})
 public class TestApplication {

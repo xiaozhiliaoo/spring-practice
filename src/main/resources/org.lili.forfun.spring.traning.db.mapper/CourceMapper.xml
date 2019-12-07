@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lili.forfun.spring.traning.db.mapper.CourseMapper">
+    <resultMap id="BaseResultMap" type="org.lili.forfun.spring.traning.db.domain.Course">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="person_id" jdbcType="INTEGER" property="personId"/>
+        <result column="open" jdbcType="INTEGER" property="open"/>
+        <result column="teacher" jdbcType="VARCHAR" property="teacher"/>
+    </resultMap>
+    <sql id="AllColumn">
+        id,
+        gmt_create,
+        gmt_modified,
+        name,
+        person_id,
+        open,
+        teacher
+    </sql>
+    <!-- insert into -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.lili.forfun.spring.traning.db.domain.Course">
+        insert into
+        course(gmt_create,gmt_modified,  name, person_id,open,  teacher)
+        values(#{gmtCreate},#{gmtModified},#{name},#{personId},
+        #{open},#{teacher})
+    </insert>
+    <!-- update -->
+    <update id="update" parameterType="org.lili.forfun.spring.traning.db.domain.Course">
+        update course
+        set
+        gmt_modified=#{gmtModified},
+        name=#{name},
+        person_id=#{personId},
+        open=#{open},
+        teacher=#{teacher}
+    </update>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)
+        from course
+    </select>
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="AllColumn"/>
+        from course
+        where id=#{id, jdbcType=BIGINT}
+    </select>
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from course
+        where id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <select id="selectCourseByPersonId" resultMap="BaseResultMap">
+        select
+        <include refid="AllColumn"/>
+        from course
+        where person_id=#{personId, jdbcType=BIGINT}
+    </select>
+</mapper>
