@@ -1,4 +1,6 @@
-**mysql-8.0.18-winx64.zip**
+## 下载mysql8
+- 下载mysql https://dev.mysql.com/downloads/mysql/
+###安装 windows下安装
 install - https://www.cnblogs.com/zhangkanghui/p/9613844.html
 mysqld --initialize-insecure --user=mysql;
 mysqld -install;   //管理员权限
@@ -8,9 +10,10 @@ select host,user,authentication_string from mysql.user;
 alter user 'root'@'localhost' identified by '123456';
 flush privileges;
 
+### 建立数据库
 CREATE SCHEMA `traning` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
 
-
+###建立表
 CREATE TABLE `traning`.`person` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `name` varchar(20) NOT NULL COMMENT '姓名',
@@ -23,12 +26,6 @@ CREATE TABLE `traning`.`person` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
-INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili', '11', 'm', '1', '1');
-INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili2', '11', 'm', '1', '1');
-INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili3', '11', 'm', '1', '1');
-INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili4', '11', 'm', '1', '1');
-
-
 CREATE TABLE `traning`.`course` (
   `id` BIGINT(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `name` VARCHAR(45) NULL COMMENT '课程名字',
@@ -40,6 +37,16 @@ CREATE TABLE `traning`.`course` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+### 初始化数据
+
+INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili', '11', 'm', '1', '1');
+INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili2', '11', 'm', '1', '1');
+INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili3', '11', 'm', '1', '1');
+INSERT INTO `traning`.`person` (`name`, `age`, `sex`, `status`, `level`) VALUES ('lili4', '11', 'm', '1', '1');
+
+
+
 
 INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('语文', '1', '1', '王老师');
 INSERT INTO `traning`.`course` (`name`, `person_id`, `open`, `teacher`) VALUES ('数学', '1', '0', '张老师');
