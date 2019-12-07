@@ -17,7 +17,7 @@ import java.sql.Connection;
 
 @Configuration
 @MapperScan(
-        basePackages = {"org.lili.forfun.spring.traning.db.mapper"},
+        basePackages = {MysqlDataSourceConfig.PACKAGE, "org.lili.forfun.spring.traning.db.mapper"},
         sqlSessionFactoryRef = "mySqlSessionFactory")
 @Log4j2
 public class MysqlDataSourceConfig {
