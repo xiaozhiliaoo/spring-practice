@@ -188,7 +188,7 @@ public class PersonService extends AbstractService<Person> {
         insert(person);
         try {
             //child3();  //插入两条
-            // ((PersonService) AopContext.currentProxy()).child3(); // 插入两条，因为是同一个事务，不会回滚
+            // ((PersonService) AopContext.currentProxy()).child3(); // 插入两条，因为是同一个事务，不会回滚，获取到的是同一个事务，这时候获取不获取没有区别
             ((PersonService) AopContext.currentProxy()).child3Transaction(); // child3 插入失败，child3有了事务，parent3插入成功,因为在不同事务
         } catch (Exception e) {
             log.error("parent3 catch child3 exception:", e);
