@@ -174,7 +174,7 @@ public class PersonService extends AbstractService<Person> {
     }
 
     /**
-     * 有事务方法调用没有事务方法，没有事务方法不会产生事务，同时插入两条数据
+     * 有事务方法调用没有事务方法，没有事务方法不会产生事务，只是一个普通方法，同时插入两条数据
      */
     @Transactional
     public void parent3() {
@@ -256,12 +256,12 @@ public class PersonService extends AbstractService<Person> {
         person.setSex("m");
         person.setStatus("1");
         insert(person);
-        //personService2.child6();  //不插入数据
-        try {
+        personService2.child6();  //不插入数据
+        /*try {
             personService2.child6(); //同时插入两条,因为在同一个事务里面，父事务没有回滚
         } catch (Exception e) {
             log.error("child6 error:", e);
-        }
+        }*/
     }
 
     /**
@@ -282,5 +282,21 @@ public class PersonService extends AbstractService<Person> {
 //        } catch (Exception e) {
 //            log.error("child6 error:", e);
 //        }
+    }
+
+    /**
+     * 有事务方法调用没有事务方法，没有事务方法和之前事务是同一个，会一起回滚
+     */
+    @Transactional
+    public void parent8() {
+        Person person = new Person();
+        person.setName("parent8");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        personService2.child8();
+        throw new RuntimeException("parent8 error");
     }
 }

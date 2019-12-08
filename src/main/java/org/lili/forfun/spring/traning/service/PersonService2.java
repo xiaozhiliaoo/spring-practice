@@ -57,4 +57,17 @@ public class PersonService2 extends AbstractService<Person> {
         insert(person);
         throw new RuntimeException("child6 exception....");
     }
+
+    /**
+     * child8没有抛出异常，如果和parent8在同一事务内，child8不会插入数据，如果child8没有产生事务，child8会插入数据
+     */
+    public void child8() {
+        Person person = new Person();
+        person.setName("child8");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+    }
 }
