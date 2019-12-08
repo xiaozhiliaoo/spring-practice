@@ -185,7 +185,9 @@ public class PersonService extends AbstractService<Person> {
         person.setLevel("1");
         person.setSex("m");
         person.setStatus("1");
-        insert(person);
+/*        insert(person);
+        child3NoException();  //都不插入，因为在同一事务内，child3NoException数据会被回滚
+        throw new RuntimeException("parent3 exception....");*/
         try {
             //child3();  //插入两条
             // ((PersonService) AopContext.currentProxy()).child3(); // 插入两条，因为是同一个事务，不会回滚，获取到的是同一个事务，这时候获取不获取没有区别
@@ -204,6 +206,16 @@ public class PersonService extends AbstractService<Person> {
         person.setStatus("1");
         insert(person);
         throw new RuntimeException("child exception....");
+    }
+
+    public void child3NoException() {
+        Person person = new Person();
+        person.setName("child3NoException");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
