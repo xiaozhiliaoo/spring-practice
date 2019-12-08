@@ -155,6 +155,7 @@ public class PersonService extends AbstractService<Person> {
         person.setStatus("1");
         insert(person);
         try {
+            //child2插入成功，说明child2并没有产生新的事务，还是在原有事务中，实际插入两条
             child2();
         } catch (Exception e) {
             log.error("parent2 catch child2 exception:", e);
@@ -186,7 +187,9 @@ public class PersonService extends AbstractService<Person> {
         person.setStatus("1");
         insert(person);
         try {
-            child3();
+            //child3();  //插入两条
+            // ((PersonService) AopContext.currentProxy()).child3(); // 插入两条，因为是同一个事务，不会回滚
+            ((PersonService) AopContext.currentProxy()).child3Transaction(); // child3 插入失败，child3有了事务，parent3插入成功,因为在不同事务
         } catch (Exception e) {
             log.error("parent3 catch child3 exception:", e);
         }
@@ -195,6 +198,18 @@ public class PersonService extends AbstractService<Person> {
     public void child3() {
         Person person = new Person();
         person.setName("child3");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        throw new RuntimeException("child exception....");
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void child3Transaction() {
+        Person person = new Person();
+        person.setName("child3Transaction");
         person.setAge("1000");
         person.setLevel("1");
         person.setSex("m");
