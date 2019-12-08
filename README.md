@@ -1,4 +1,5 @@
 ## spring-transaction-traning
+spring事务特性验证
 ====================
 
 ### 准备:
