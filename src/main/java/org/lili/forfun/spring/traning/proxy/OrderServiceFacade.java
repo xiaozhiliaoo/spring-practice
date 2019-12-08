@@ -3,9 +3,10 @@ package org.lili.forfun.spring.traning.proxy;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+@Service
 @Log4j2
-public class Main {
-    public static void main(String[] args) {
+public class OrderServiceFacade {
+    public void invoke() {
         log.info("--------------orderService--------------");
         OrderService orderService = new OrderServiceImpl();
         OrderProxy proxy = new OrderProxy(orderService);
