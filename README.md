@@ -20,4 +20,10 @@
 - `curl localhost:9888/personApi/name2?name=lili 不同Service，没有事务方法调用另一个service有事务方法`
 - `curl localhost:9888/personApi/name3?name=lili 同一Service，有事务方法调用没有事务方法`
 - `curl localhost:9888/personApi/name4?name=lili  同一Service，没有事务方法调用有注解的事务方法(事务不生效，插入新数据)`
+- `curl localhost:9888/personApi/parent1-child1 `
+- `curl localhost:9888/personApi/parent2-child2 `
+
+### 参考:
+[JDK动态代理给Spring事务埋下的坑！](https://blog.csdn.net/bntx2jsqfehy7/article/details/79040349)
+[Spring事务管理嵌套事务详解](https://blog.csdn.net/levae1024/article/details/82998386)
 

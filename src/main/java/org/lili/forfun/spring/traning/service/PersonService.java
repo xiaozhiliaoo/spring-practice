@@ -9,6 +9,7 @@ import org.lili.forfun.spring.traning.db.mapper.PersonMapper;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -31,7 +32,8 @@ public class PersonService extends AbstractService<Person> {
 
     /**
      * 该事务要做的事情是，查找学生，并且修改学生名字和学生所对应的课程
-     *  AbstractPlatformTransactionManager
+     * AbstractPlatformTransactionManager
+     *
      * @param name
      * @return
      */
@@ -57,7 +59,7 @@ public class PersonService extends AbstractService<Person> {
         return people;
     }
 
-    public void updatePerson3(Person person){
+    public void updatePerson3(Person person) {
         person.setAge(String.valueOf(RandomUtils.nextInt()));
         person.setGmtModified(new Date());
         update(person);
@@ -67,10 +69,11 @@ public class PersonService extends AbstractService<Person> {
 
     /**
      * 同一个类中的方法
+     *
      * @param person
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updatePerson(Person person){
+    public void updatePerson(Person person) {
         person.setAge(String.valueOf(RandomUtils.nextInt()));
         person.setGmtModified(new Date());
         update(person);
@@ -80,6 +83,7 @@ public class PersonService extends AbstractService<Person> {
 
     /**
      * updatePerson4事务不生效，数据库插入新数据
+     *
      * @param name
      * @return
      */
@@ -91,11 +95,65 @@ public class PersonService extends AbstractService<Person> {
     }
 
     @Transactional
-    public void updatePerson4(Person person){
+    public void updatePerson4(Person person) {
         person.setAge(String.valueOf(RandomUtils.nextInt()));
         person.setGmtModified(new Date());
         update(person);
         courseService.updateCource(person);
         throw new RuntimeException("error");
+    }
+
+
+    @Transactional
+    public void parent() {
+        Person person = new Person();
+        person.setName("parent");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        child();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void child() {
+        Person person = new Person();
+        person.setName("child");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        throw new RuntimeException("child exception....");
+    }
+
+
+    @Transactional
+    public void parent2() {
+        Person person = new Person();
+        person.setName("parent");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        try {
+            child2();
+        } catch (Exception e) {
+            log.error("parent2 catch child2 exception:", e);
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    public void child2() {
+        Person person = new Person();
+        person.setName("child");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        throw new RuntimeException("child exception....");
     }
 }

@@ -64,4 +64,30 @@ public class PersonApi extends BaseApi {
             return error(e.getMessage());
         }
     }
+
+    /**
+     * https://blog.csdn.net/bntx2jsqfehy7/article/details/79040349
+     * @return
+     */
+    @GetMapping("/parent1-child1")
+    public RequestResult<Void> parent1() {
+        try {
+            personService.parent();
+        } catch (Exception e) {
+            log.error("parent1-child1 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+    @GetMapping("/parent2-child2")
+    public RequestResult<Void> name6() {
+        try {
+            personService.parent2();
+        } catch (Exception e) {
+            log.error("parent2-child2 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
 }
