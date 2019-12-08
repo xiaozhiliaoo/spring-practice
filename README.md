@@ -16,12 +16,12 @@ spring事务特性验证
 - `curl localhost:9888/helloApi/second 同一个service里面一个方法调用`
 - `curl localhost:9888/personApi/parent1-child1  同一Service，事务方法parent调用事务方法child，child事务不生效`
 - `curl localhost:9888/personApi/parent2-child2 同一Service，事务方法parent调用事务方法child，child事务不生效`
-- `curl localhost:9888/personApi/parent3-child3 同一Service，事务方法parent调用普通方法child，child不产生事务`
+- `curl localhost:9888/personApi/parent3-child3 同一Service，事务方法parent调用普通方法child，child会在parent事务中`
 - `curl localhost:9888/personApi/parent4-child4 同一Service，普通方法parent调用事务方法child，事务方法child事务不生效`
 - `curl localhost:9888/personApi/parent5-child5 不同Service，普通方法parent调用事务方法child，事务方法child事务生效`
 - `curl localhost:9888/personApi/parent6-child6 不同Service，事务方法parent调用普通方法child，普通方法child事务生效，并和parent在同一事务`
 - `curl localhost:9888/personApi/parent7-child7 不同Service，事务方法parent调用新事务法child，事务方法child生效，和parent在不同事务中`
-- `curl localhost:9888/personApi/parent8-child8 不同Service，事务方法parent调用普通方法child，事务方法child生效，child不抛出异常，parent抛出异常，会使得child回滚`
+- `curl localhost:9888/personApi/parent8-child8 不同Service，事务方法parent调用普通方法child，child会在parent事务中，child不抛出异常，parent抛出异常，会使得child回滚`
 - `curl localhost:9888/proxyApi/proxy Java动态代理测试，代理方法内调用普通方法，普通方法不会产生代理行为`
 
 ### 参考:
