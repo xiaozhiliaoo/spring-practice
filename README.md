@@ -5,25 +5,24 @@
 安装mysql8(我的环境是windows)，建立person和course表，初始化数据，详见[install-mysql-and-load-data](/src/main/resources/windows-install-mysql.md)
 
 ### 结论:
-两个ServiceA，ServiceB
-- 在一个ServiceA内，有@Transactinal注解的方法调用没有注解的方法会产生事务传播，但是
-没有注解的调用有@Transactinal注解的会使得事务失效，需要通过AopContext.currentProxy()
-获取当前代理对象，然后调用。
-- 不同的Service内，有ServiceA的@Transactinal注解方法调用没有注解ServiceB的方法会产生事务传播，ServiceA没有
-注解方法的调用有ServiceB的@Transactinal注解也会保存ServiceB的事务完整。
+两个不同的Service
+- 在一个ServiceA内，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用，被嵌套的方法都不会产生事务，只是一个普通方法。
+- 不同的Service内，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用，被嵌套的方法都会产生事务。
 
 
 ### 测试用例:
 - `curl localhost:9888/helloApi/first 同一个service里面切入不同方法`
 - `curl localhost:9888/helloApi/second 同一个service里面一个方法调用`
-- `curl localhost:9888/personApi/name?name=lili  同一Service，没有事务方法调用代理事务方法`
-- `curl localhost:9888/personApi/name2?name=lili 不同Service，没有事务方法调用另一个service有事务方法`
-- `curl localhost:9888/personApi/name3?name=lili 同一Service，有事务方法调用没有事务方法`
-- `curl localhost:9888/personApi/name4?name=lili  同一Service，没有事务方法调用有注解的事务方法(事务不生效，插入新数据)`
-- `curl localhost:9888/personApi/parent1-child1 `
-- `curl localhost:9888/personApi/parent2-child2 `
+- `curl localhost:9888/personApi/parent1-child1  同一Service，事务方法parent调用事务方法child，child事务不生效`
+- `curl localhost:9888/personApi/parent2-child2 同一Service，事务方法parent调用事务方法child，child事务不生效`
+- `curl localhost:9888/personApi/parent3-child3 同一Service，事务方法parent调用普通方法child，child不产生事务`
+- `curl localhost:9888/personApi/parent4-child4 同一Service，普通方法parent调用事务方法child，事务方法child事务不生效`
+- `curl localhost:9888/personApi/parent5-child5 不同Service，普通方法parent调用事务方法child，事务方法child事务生效`
+- `curl localhost:9888/personApi/parent6-child6 不同Service，事务方法parent调用普通方法child，事务方法child事务生效，并和parent在同一事务`
+- `curl localhost:9888/personApi/parent7-child7 不同Service，事务方法parent调用新事务法child，事务方法child生效，和parent在不同事务中`
 
 ### 参考:
 [JDK动态代理给Spring事务埋下的坑！](https://blog.csdn.net/bntx2jsqfehy7/article/details/79040349)
+
 [Spring事务管理嵌套事务详解](https://blog.csdn.net/levae1024/article/details/82998386)
 

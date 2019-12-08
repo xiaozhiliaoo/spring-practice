@@ -81,11 +81,66 @@ public class PersonApi extends BaseApi {
     }
 
     @GetMapping("/parent2-child2")
-    public RequestResult<Void> name6() {
+    public RequestResult<Void> parent2() {
         try {
             personService.parent2();
         } catch (Exception e) {
             log.error("parent2-child2 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+    @GetMapping("/parent3-child3")
+    public RequestResult<Void> parent3() {
+        try {
+            personService.parent3();
+        } catch (Exception e) {
+            log.error("parent3-child3 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+    @GetMapping("/parent4-child4")
+    public RequestResult<Void> parent4() {
+        try {
+            personService.parent4();
+        } catch (Exception e) {
+            log.error("parent4-child4 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+    @GetMapping("/parent5-child5")
+    public RequestResult<Void> parent5() {
+        try {
+            personService.parent5();
+        } catch (Exception e) {
+            log.error("parent5-child5 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+    @GetMapping("/parent6-child6")
+    public RequestResult<Void> parent6() {
+        try {
+            personService.parent6();
+        } catch (Exception e) {
+            log.error("parent6-child6 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+    @GetMapping("/parent7-child7")
+    public RequestResult<Void> parent7() {
+        try {
+            personService.parent7();
+        } catch (Exception e) {
+            log.error("parent7-child7 error:", e);
             return error(e.getMessage());
         }
         return succ();

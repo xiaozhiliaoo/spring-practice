@@ -25,6 +25,9 @@ public class PersonService extends AbstractService<Person> {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private PersonService2 personService2;
+
     @Override
     public BaseMapper<Person> getMapper() {
         return personMapper;
@@ -55,14 +58,18 @@ public class PersonService extends AbstractService<Person> {
     public List<Person> selectPersonByName3(String name) {
         List<Person> people = personMapper.selectPersonByName(name);
         Person person = people.get(0);
-        updatePerson3(person);
+        person.setAge(String.valueOf(RandomUtils.nextInt()));
+        person.setGmtModified(new Date());
+        update(person);
+        try {
+            updatePerson3(person);
+        } catch (Exception e) {
+            log.error("updatePerson3 error:", e);
+        }
         return people;
     }
 
     public void updatePerson3(Person person) {
-        person.setAge(String.valueOf(RandomUtils.nextInt()));
-        person.setGmtModified(new Date());
-        update(person);
         courseService.updateCource(person);
         throw new RuntimeException("error");
     }
@@ -104,6 +111,11 @@ public class PersonService extends AbstractService<Person> {
     }
 
 
+    /**
+     * 事务方法间互相调用：结果都没有插入新数据，
+     * 实际因为child抛出异常，parent捕获了，一起回滚，因为child是一个简单的方法，并不是因为child是一个独立的
+     * 事务
+     */
     @Transactional
     public void parent() {
         Person person = new Person();
@@ -129,10 +141,14 @@ public class PersonService extends AbstractService<Person> {
     }
 
 
+    /**
+     * 事务方法间互相调用：按照事务传播特性，理论是parent提交成功，child回滚，但是实际插入2条新数据，
+     * 说明child2事务没有生效，因为child2没有事务，只是普通方法，parent2没有捕获异常，所以也成功插入
+     */
     @Transactional
     public void parent2() {
         Person person = new Person();
-        person.setName("parent");
+        person.setName("parent2");
         person.setAge("1000");
         person.setLevel("1");
         person.setSex("m");
@@ -145,15 +161,126 @@ public class PersonService extends AbstractService<Person> {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void child2() {
         Person person = new Person();
-        person.setName("child");
+        person.setName("child2");
         person.setAge("1000");
         person.setLevel("1");
         person.setSex("m");
         person.setStatus("1");
         insert(person);
         throw new RuntimeException("child exception....");
+    }
+
+    /**
+     * 有事务方法调用没有事务方法，没有事务方法不会产生事务，同时插入两条数据
+     */
+    @Transactional
+    public void parent3() {
+        Person person = new Person();
+        person.setName("parent3");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        try {
+            child3();
+        } catch (Exception e) {
+            log.error("parent3 catch child3 exception:", e);
+        }
+    }
+
+    public void child3() {
+        Person person = new Person();
+        person.setName("child3");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        throw new RuntimeException("child exception....");
+    }
+
+    /**
+     * 没有事务方法调用有事务方法，会使得事务失效
+     */
+    public void parent4() {
+        Person person = new Person();
+        person.setName("parent4");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        //child4();    //parent插入成功，child插入成功，因为相当于两个普通方法调用
+        ((PersonService) AopContext.currentProxy()).child4();  //parent插入成功，child插入失效，因为child4产生事务
+    }
+
+    @Transactional
+    public void child4() {
+        Person person = new Person();
+        person.setName("child4");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        throw new RuntimeException("child exception....");
+    }
+
+    /**
+     * 没有事务方法，调用另一个Service有事务的方法child5，parent5插入成功，child5插入失败
+     */
+    public void parent5() {
+        Person person = new Person();
+        person.setName("parent5");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        personService2.child5();
+    }
+
+    /**
+     * PersonService1有事务parent6调用PersonService1没有事务方法child6
+     */
+    @Transactional
+    public void parent6() {
+        Person person = new Person();
+        person.setName("parent6");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        //personService2.child6();  //不插入数据
+        try {
+            personService2.child6(); //同时插入两条,因为在同一个事务里面，父事务没有回滚
+        } catch (Exception e) {
+            log.error("child6 error:", e);
+        }
+    }
+
+    /**
+     * 有事务parent7调用有事务的child7
+     */
+    @Transactional
+    public void parent7() {
+        Person person = new Person();
+        person.setName("parent7");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        personService2.child7(); // child7回滚，抛出异常，两个不同事务，不插入两条数据
+//        try {
+//            personService2.child7();  //两个不同的事务，parent7插入数据，child7不插入数据
+//        } catch (Exception e) {
+//            log.error("child6 error:", e);
+//        }
     }
 }
