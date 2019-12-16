@@ -326,4 +326,9 @@ public class PersonService extends AbstractService<Person> {
         personService2.child8();
         throw new RuntimeException("parent8 error");
     }
+
+    @Transactional(readOnly = true)
+    public void showErrorStackTrace() {
+        personService2.showErrorStackTrace();
+    }
 }

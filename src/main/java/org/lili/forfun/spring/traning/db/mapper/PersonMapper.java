@@ -57,4 +57,8 @@ public interface PersonMapper extends BaseMapper<Person> {
     @Select("select count(*) from person")
     int count();
 
+
+    @Select("SELECT id,name,age, max(gmt_create) FROM person")
+    public void showErrorStackTrace();
+
 }

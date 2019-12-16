@@ -4,7 +4,6 @@ import lombok.extern.log4j.Log4j2;
 import org.lili.forfun.spring.traning.db.domain.Person;
 import org.lili.forfun.spring.traning.db.mapper.BaseMapper;
 import org.lili.forfun.spring.traning.db.mapper.PersonMapper;
-import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -69,5 +68,9 @@ public class PersonService2 extends AbstractService<Person> {
         person.setSex("m");
         person.setStatus("1");
         insert(person);
+    }
+
+    public void showErrorStackTrace() {
+        personMapper.showErrorStackTrace();
     }
 }
