@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 重在分析web请求过程：1 启动初始化 2 请求过程
  * https://blog.csdn.net/weixin_30856965/article/details/95026239
  * 里面有三大组件：1 servlet容器 2 spring容器 3 springmvc，有两大过程：1 启动 2 处理请求
+ * 分析方法：1 dump线程 2 debug
  *
  */
 @Component
