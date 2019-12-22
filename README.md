@@ -7,10 +7,10 @@ spring事务特性验证
 
 ### 结论:
 两个不同的Service
-- 在一个Service内，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用，被嵌套的方法都不会产生事务，只是一个普通方法。可以通过AopContext.currentProxy()获取被嵌套方法的代理对象，从而产生事务。
+- 在一个Service内，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用，被嵌套的方法都不会产生事务，只是一个普通方法。可以通过AopContext.currentProxy()获取被嵌套方法的代理对象，从而产生事务。这里产生事务指的是主动产生的事务(Participating in existing transcation)，而并非不能处在事务的上下文中。
 - 不同的Service内，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用，被嵌套的方法都会产生事务。
-
-
+- 在一个Service内，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用不会产生事务传播行为，但是并非被嵌套不能工作在事务上下文中。
+- 不能被Spring事务加强的方法指的是不能主动产生一个新事务。
 ### 测试用例:
 - `curl localhost:9888/helloApi/first 同一个service里面切入不同方法`
 - `curl localhost:9888/helloApi/second 同一个service里面一个方法调用`
