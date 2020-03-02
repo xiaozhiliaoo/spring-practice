@@ -156,4 +156,15 @@ public class PersonApi extends BaseApi {
         }
         return succ();
     }
+
+    @GetMapping("/parent9-child9")
+    public RequestResult<Void> parent9() {
+        try {
+            personService.parent9();
+        } catch (Exception e) {
+            log.error("parent9-child9 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
 }
