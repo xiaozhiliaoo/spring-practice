@@ -1,10 +1,15 @@
 package org.lili.forfun.spring.traning.api;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.io.CharStreams;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.lili.forfun.spring.traning.enums.ExceptionCode;
 import org.lili.forfun.spring.traning.exception.BusinessException;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Log4j2
 abstract class BaseApi {
@@ -54,5 +59,24 @@ abstract class BaseApi {
         RequestResult<T> rr = new RequestResult<>();
         log.info("result json: {}", JSON.toJSONString(rr));
         return rr;
+    }
+
+    @Autowired
+    private HttpServletRequest request;
+
+    protected void errorWithParams(Exception e) {
+        String method = request.getMethod();
+        String params = "";
+        if ("GET".equalsIgnoreCase(method)) {
+            params = JSON.toJSONString(request.getParameterMap());
+        } else if ("POST".equalsIgnoreCase(method)) {
+            try {
+                params = JSON.toJSONString(request.getParameterMap());
+            } catch (Exception convertException) {
+                log.error("", convertException);
+            }
+        }
+        String requestURI = request.getRequestURI();
+        log.error("uri is:{}, params:{}, error:{}", requestURI, params, e);
     }
 }
