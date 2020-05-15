@@ -5,18 +5,16 @@ import org.lili.forfun.spring.traning.db.domain.Person;
 import org.lili.forfun.spring.traning.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Log4j2
 @RestController
 @RequestMapping("/helloApi")
-public class HelloApi extends BaseApi{
+public class HelloApi extends BaseApi {
 
     @Autowired
     private HelloService helloService;
@@ -37,6 +35,29 @@ public class HelloApi extends BaseApi{
             helloService.second();
         } catch (Exception e) {
             log.error("hi error:", e);
+        }
+        return succ();
+    }
+
+
+    @GetMapping("/third")
+    public RequestResult<Void> third() {
+        try {
+            System.out.println("----1----");
+            throw new RuntimeException("runtimeException");
+        } catch (Exception e) {
+            log.error("hi error:[{}] {}", "hello", "hello2", e);
+        }
+        return succ();
+    }
+
+    @PostMapping("/four")
+    public RequestResult<Void> four(@RequestBody Map<String, String> paramsMap) {
+        try {
+            System.out.println("----1----");
+            throw new RuntimeException("runtimeException");
+        } catch (Exception e) {
+            log.error("hi error:[{}] {}", "hello", "hello2", e);
         }
         return succ();
     }
