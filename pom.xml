@@ -12,7 +12,7 @@
         <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
         <spring.version>4.3.13.RELEASE</spring.version>
         <logger.api.version>0.1.5-log4j2-SNAPSHOT</logger.api.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
     <dependencyManagement>
         <dependencies>
