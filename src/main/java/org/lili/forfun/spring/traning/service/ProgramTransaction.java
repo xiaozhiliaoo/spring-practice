@@ -4,7 +4,6 @@ import org.lili.forfun.spring.traning.db.domain.Person;
 import org.lili.forfun.spring.traning.db.mapper.BaseMapper;
 import org.lili.forfun.spring.traning.db.mapper.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;

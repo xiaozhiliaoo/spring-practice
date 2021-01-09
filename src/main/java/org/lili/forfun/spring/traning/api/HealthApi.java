@@ -22,7 +22,23 @@ public class HealthApi extends BaseApi {
     @GetMapping("/health")
     public String health() {
         log.debug("{}", System.currentTimeMillis());
-        return "OK";
+        log.info("I am health");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 10000000; i++) {
+            builder.append("alibababab");
+        }
+        return builder.toString();
+    }
+
+    @GetMapping("/health2")
+    public String health2() {
+        log.debug("{}", System.currentTimeMillis());
+        log.info("I am health");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 1000; i++) {
+            builder.append("alibaba");
+        }
+        return builder.toString();
     }
 
 }

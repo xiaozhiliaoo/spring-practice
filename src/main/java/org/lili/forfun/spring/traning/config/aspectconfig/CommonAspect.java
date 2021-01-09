@@ -19,6 +19,13 @@ public class CommonAspect {
 
     @Before("serviceMethod()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement stackTraceElement : stackTrace) {
+            if (stackTraceElement.getClassName().contains("traning")) {
+                System.out.println("call chain:" + stackTraceElement.getClassName());
+            }
+        }
+
         log.info("doBefore name:{}", joinPoint.getSignature().getName());
     }
 

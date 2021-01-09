@@ -1,6 +1,5 @@
 package org.lili.forfun.spring.traning.db.domain;
 
-import io.swagger.models.auth.In;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
