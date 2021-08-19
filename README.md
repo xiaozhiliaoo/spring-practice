@@ -23,6 +23,7 @@ spring事务特性验证-基于Mysql
 - `curl localhost:9888/personApi/parent7-child7 不同Service，事务方法parent调用新事务法child，事务方法child生效，和parent在不同事务中`
 - `curl localhost:9888/personApi/parent8-child8 不同Service，事务方法parent调用普通方法child，child会在parent事务中，child不抛出异常，parent抛出异常，会使得child回滚`
 - `curl localhost:9888/personApi/parent9-child9 测试只读事务`
+- `curl localhost:9888/personApi/parent11 测试事务注解默认不回滚Exception异常`
 - `curl localhost:9888/proxyApi/proxy Java动态代理测试，代理方法内调用普通方法，普通方法不会产生代理行为`
 
 ### 参考:

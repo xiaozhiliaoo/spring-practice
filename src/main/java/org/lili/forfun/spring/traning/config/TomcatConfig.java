@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class TomcatConfig {
 
-    @Value("${port:8080}")
+    @Value("${port:9888}")
     private int port;
 
     @Bean

@@ -167,4 +167,39 @@ public class PersonApi extends BaseApi {
         }
         return succ();
     }
+
+
+    @GetMapping("/parent10")
+    public RequestResult<Void> parent10(@RequestParam Long id) {
+        try {
+            personService.parent10(id);
+        } catch (Exception e) {
+            log.error("parent10 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+    @GetMapping("/parent10_nolock_search")
+    public RequestResult<Void> parent10NolockSearch(@RequestParam Long id) {
+        try {
+            personService.parent10NolockSearch(id);
+        } catch (Exception e) {
+            log.error("parent10NolockSearch error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
+
+
+    @GetMapping("/parent11")
+    public RequestResult<Void> parent11() {
+        try {
+            personService.parent11();
+        } catch (Exception e) {
+            log.error("parent10 error:", e);
+            return error(e.getMessage());
+        }
+        return succ();
+    }
 }

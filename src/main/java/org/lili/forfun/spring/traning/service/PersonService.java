@@ -1,8 +1,8 @@
 package org.lili.forfun.spring.traning.service;
 
 import com.alibaba.fastjson.JSON;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-
 import org.apache.commons.lang3.RandomUtils;
 import org.lili.forfun.spring.traning.db.domain.Person;
 import org.lili.forfun.spring.traning.db.mapper.BaseMapper;
@@ -336,11 +336,62 @@ public class PersonService extends AbstractService<Person> {
     @Transactional(readOnly = true)
     public void parent9() throws InterruptedException {
         List<Person> lili = personMapper.selectPersonByName("lili");
-        log.info("parent9 lili:{}",JSON.toJSONString(lili));
+        log.info("parent9 lili:{}", JSON.toJSONString(lili));
         Thread.sleep(20000);//20秒等待
         //测试修改之后是否可以再次读取一样数据
         List<Person> liliChange = personMapper.selectPersonByName("lili");
-        log.info("parent9 liliChange:{}",JSON.toJSONString(liliChange));
+        log.info("parent9 liliChange:{}", JSON.toJSONString(liliChange));
         //直接数据库修改数据！！！在看liliChange数据是否被修改！！！
+    }
+
+
+    @Transactional
+    public void parent10(Long id) throws InterruptedException {
+        //begin transaction
+        log.info("entry into Transactional. begin ...");
+
+        Person lili = personMapper.findById(id);
+        log.info("parent10 nolock  lili:{}", JSON.toJSONString(lili));
+
+
+        Person lili2 = personMapper.selectByIdAddLock(id);
+        log.info("parent10 lock lili:{}", JSON.toJSONString(lili2));
+        log.info("do long task start ...");
+        Thread.sleep(20000);//20秒等待
+        log.info("do long task end ...");
+        //测试修改之后是否可以再次读取一样数据
+        lili2.setAge(String.valueOf(Integer.MAX_VALUE));
+        personMapper.update(lili2);
+        log.info("parent10 liliChange:{}", JSON.toJSONString(lili2));
+        //commit
+        //end trancaction
+    }
+
+
+    public void parent10NolockSearch(Long id) {
+        Person lili = personMapper.findById(id);
+        log.info("parent10_nolock_search lili:{}", JSON.toJSONString(lili));
+        lili.setAge(String.valueOf(Integer.MAX_VALUE));
+        log.info("update start ....");
+        personMapper.update(lili);
+        log.info("update end ....");
+        log.info("parent10_nolock_search liliChange:{}", JSON.toJSONString(lili));
+    }
+
+    @Transactional
+    public void parent11() {
+        Person person = new Person();
+        person.setName("parent");
+        person.setAge("1000");
+        person.setLevel("1");
+        person.setSex("m");
+        person.setStatus("1");
+        insert(person);
+        exception();
+    }
+
+    @SneakyThrows
+    public void exception() {
+        throw new Exception("插入失败");
     }
 }

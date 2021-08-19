@@ -25,11 +25,21 @@ public interface PersonMapper extends BaseMapper<Person> {
     int delete(long id);
 
     /**
-     * xml file can not work,why?
+     * xml file can not work,why? 为什么XML不能工作呢？？？老是报错呢
      * @param id
      * @return
      */
-    @Override
+    @Select("select id,gmt_create,gmt_modified,name,age, sex, status, level from person where id = #{id,jdbcType=BIGINT}")
+    @Results({
+            @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+            @Result(column = "gmt_create", property = "gmtCreate", jdbcType = JdbcType.TIMESTAMP),
+            @Result(column = "gmt_modified", property = "gmtModified", jdbcType = JdbcType.TIMESTAMP),
+            @Result(column = "name", property = "name", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "age", property = "age", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "sex", property = "sex", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "status", property = "status", jdbcType = JdbcType.INTEGER),
+            @Result(column = "level", property = "level", jdbcType = JdbcType.INTEGER)
+    })
     Person findById(long id);
 
     /**
@@ -56,6 +66,20 @@ public interface PersonMapper extends BaseMapper<Person> {
     @Override
     @Select("select count(*) from person")
     int count();
+
+
+    @Select("select id,gmt_create,gmt_modified,name,age, sex, status, level from person where id = #{id,jdbcType=BIGINT} for update")
+    @Results({
+            @Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT, id = true),
+            @Result(column = "gmt_create", property = "gmtCreate", jdbcType = JdbcType.TIMESTAMP),
+            @Result(column = "gmt_modified", property = "gmtModified", jdbcType = JdbcType.TIMESTAMP),
+            @Result(column = "name", property = "name", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "age", property = "age", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "sex", property = "sex", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "status", property = "status", jdbcType = JdbcType.INTEGER),
+            @Result(column = "level", property = "level", jdbcType = JdbcType.INTEGER)
+    })
+    Person selectByIdAddLock(Long id);
 
 
     @Select("SELECT id,name,age, max(gmt_create) FROM person")
