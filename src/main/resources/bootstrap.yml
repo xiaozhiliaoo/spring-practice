@@ -1,4 +1,4 @@
 spring:
   application:
-    name: spring-traning-base
+    name: spring-training-base
     group: org.lili.forfun

@@ -1,4 +1,4 @@
 spring:
   application:
-    name: spring-transaction-traning
+    name: spring-transaction-training
     group: org.lili.forfun

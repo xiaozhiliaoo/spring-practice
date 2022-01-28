@@ -12,6 +12,6 @@ tom:
 #logging:
 #  level:
 #    root: ERROR
-#    org.lili.forfun.spring.traning: ERROR
+#    org.lili.forfun.spring.training: ERROR
 #    org.springframework.web: ERROR
 

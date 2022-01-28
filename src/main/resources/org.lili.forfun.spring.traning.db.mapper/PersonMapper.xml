@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.lili.forfun.spring.traning.db.mapper.PersonMapper">
-    <resultMap id="BaseResultMap" type="org.lili.forfun.spring.traning.db.domain.Person">
+<mapper namespace="org.lili.forfun.spring.training.db.mapper.PersonMapper">
+    <resultMap id="BaseResultMap" type="org.lili.forfun.spring.training.db.domain.Person">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
@@ -23,7 +23,7 @@
     </sql>
     <!-- insert into -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
-            parameterType="org.lili.forfun.spring.traning.db.domain.Person">
+            parameterType="org.lili.forfun.spring.training.db.domain.Person">
         insert into
         person(gmt_create,gmt_modified,
         name,
@@ -34,7 +34,7 @@
         values(#{gmtCreate},#{gmtModified},#{name},#{age},#{sex},#{status},#{level})
     </insert>
     <!-- update -->
-    <update id="update" parameterType="org.lili.forfun.spring.traning.db.domain.Person">
+    <update id="update" parameterType="org.lili.forfun.spring.training.db.domain.Person">
         update
         person
         set

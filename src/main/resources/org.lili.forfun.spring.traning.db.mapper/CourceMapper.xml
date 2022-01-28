@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.lili.forfun.spring.traning.db.mapper.CourseMapper">
-    <resultMap id="BaseResultMap" type="org.lili.forfun.spring.traning.db.domain.Course">
+<mapper namespace="org.lili.forfun.spring.training.db.mapper.CourseMapper">
+    <resultMap id="BaseResultMap" type="org.lili.forfun.spring.training.db.domain.Course">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
@@ -21,14 +21,14 @@
     </sql>
     <!-- insert into -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
-            parameterType="org.lili.forfun.spring.traning.db.domain.Course">
+            parameterType="org.lili.forfun.spring.training.db.domain.Course">
         insert into
         course(gmt_create,gmt_modified,  name, person_id,open,  teacher)
         values(#{gmtCreate},#{gmtModified},#{name},#{personId},
         #{open},#{teacher})
     </insert>
     <!-- update -->
-    <update id="update" parameterType="org.lili.forfun.spring.traning.db.domain.Course">
+    <update id="update" parameterType="org.lili.forfun.spring.training.db.domain.Course">
         update course
         set
         gmt_modified=#{gmtModified},

@@ -1,4 +1,4 @@
-package org.lili.forfun.spring.traning.util;
+package org.lili.forfun.spring.training.util;
 
 import org.springframework.stereotype.Component;
 

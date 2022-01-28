@@ -2,8 +2,8 @@
 <Configuration>
     <Properties>
         <Property name="baseDir">logs</Property>
-        <Property name="logName">spring-traning-base</Property>
-        <Property name="springLogName">spring-traning-base-spring</Property>
+        <Property name="logName">spring-training-base</Property>
+        <Property name="springLogName">spring-training-base-spring</Property>
 
         <!-- 过往日志格式为: {logName}.log.{保存日期} -->
         <Property name="backupLog">${baseDir}/${logName}.log.%d{yyyy-MM-dd}</Property>

@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.lili.forfun</groupId>
-    <artifactId>spring-traning-base</artifactId>
+    <artifactId>spring-training-base</artifactId>
     <packaging>jar</packaging>
     <version>1.0.7</version>
-    <name>Spring Transaction Traning</name>
+    <name>Spring Transaction Training</name>
     <properties>
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
         <spring.version>5.2.3.RELEASE</spring.version>
@@ -198,7 +198,7 @@
     </dependencies>
 
     <build>
-        <finalName>spring-traning-base</finalName>
+        <finalName>spring-training-base</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
