@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 
 @Log4j2
-abstract class BaseApi {
+public abstract class BaseApi {
 
     protected static final String APPLICATION_JSON = "application/json; charset=utf-8";
 
