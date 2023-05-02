@@ -17,7 +17,7 @@ public class HelloApi extends BaseApi {
     @Autowired
     private HelloService helloService;
 
-    @GetMapping("/first")
+    @GetMapping("/zzz")
     public RequestResult<Void> first() {
         try {
             helloService.first();

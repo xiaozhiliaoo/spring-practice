@@ -1,6 +1,7 @@
 package org.lili.forfun.spring.training.api;
 
 import lombok.extern.log4j.Log4j2;
+import org.lili.forfun.spring.training.beanlifecycle.Car;
 import org.lili.forfun.spring.training.db.domain.Person;
 import org.lili.forfun.spring.training.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 @Component
 @Log4j2
@@ -19,6 +21,18 @@ import java.util.List;
 public class PersonApi extends BaseApi {
     @Autowired
     private PersonService personService;
+
+
+    @GetMapping("/getById")
+    public RequestResult<Person> getById(@RequestParam(name = "id") Long id) {
+        log.info("GET id name:{}", id);
+        try {
+            return process(personService.getById(id));
+        } catch (Exception e) {
+            log.error("getById error:", e);
+            return error(e.getMessage());
+        }
+    }
 
     @GetMapping("/name")
     public RequestResult<List<Person>> getPersonByName(@RequestParam(name = "name") String name) {

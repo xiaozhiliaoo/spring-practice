@@ -394,4 +394,8 @@ public class PersonService extends AbstractService<Person> {
     public void exception() {
         throw new Exception("插入失败");
     }
+
+    public Person getById(Long id) {
+        return personMapper.findById(id);
+    }
 }
