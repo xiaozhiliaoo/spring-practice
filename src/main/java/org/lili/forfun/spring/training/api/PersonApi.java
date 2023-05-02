@@ -1,7 +1,6 @@
 package org.lili.forfun.spring.training.api;
 
 import lombok.extern.log4j.Log4j2;
-import org.lili.forfun.spring.training.beanlifecycle.Car;
 import org.lili.forfun.spring.training.db.domain.Person;
 import org.lili.forfun.spring.training.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 @Component
 @Log4j2
@@ -80,6 +78,7 @@ public class PersonApi extends BaseApi {
 
     /**
      * https://blog.csdn.net/bntx2jsqfehy7/article/details/79040349
+     *
      * @return
      */
     @GetMapping("/parent1-child1")
