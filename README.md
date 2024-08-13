@@ -12,6 +12,10 @@ Spring事务特性验证-基于Mysql
 - 在一个Service内，事务方法之间的嵌套调用，普通方法和事务方法之间的嵌套调用不会产生事务传播行为，但是并非被嵌套不能工作在事务上下文中。
 - 不能被Spring事务加强的方法指的是不能主动产生一个新事务，并不是不能在事务方法里面运行。
 
+事务失效解决方案：
+- 拆分Service。
+- 使用AopContext.currentProxy()。
+
 # 测试用例:
 - `curl localhost:9888/helloApi/first 同一个service里面切入不同方法`
 - `curl localhost:9888/helloApi/second 同一个service里面一个方法调用`
